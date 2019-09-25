@@ -1,21 +1,17 @@
 import cv2
 import numpy as np
 import datetime
-
-seconds = datetime.datetime.now()
-print(seconds)
+import time
 # Video Capture 
 # capture = cv2.VideoCapture(0)
-capture = cv2.VideoCapture(0)
-
-
+capture = cv2.VideoCapture("Nada.mp4")
 # History, Threshold, DetectShadows 
 # fgbg = cv2.createBackgroundSubtractorMOG2(50, 200, True)
 fgbg = cv2.createBackgroundSubtractorMOG2(300, 400, True)
 
 # Keeps track of what frame we're on
 frameCount = 0
-s = "A impressão começou"
+s = "Inicio da impressão!"
 
 while(1):
 	# Return Value and the current frame
@@ -38,22 +34,27 @@ while(1):
 
 	# Determine how many pixels do you want to detect to be considered "movement"
 	# if (frameCount > 1 and count > 5000):
-    if count > 500 :
+    x=np.count_nonzero(fgmask)
+   
+    if count > 500:
         if s != "Parado":
-            t1=datetime.localtime()
             print(s)
             s = "Parado"
     else:
         if s != "Movimento":
-            t2=datetime.localtime()
-            print(s)
-            s = "Movimento"
+            time.sleep(10)
+            if count<500:
+                print(s)
+                s = "Movimento"
+
+
+            
     cv2.imshow('Frame', resizedFrame)
+    cv2.imshow('Mask', fgmask)
 
 
     k = cv2.waitKey(1) & 0xff
     if k == 27:
         break
-
 capture.release()
 cv2.destroyAllWindows()
