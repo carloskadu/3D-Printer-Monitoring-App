@@ -52,6 +52,8 @@ while(1):
                     print(s)   
                     s = "Movimento"
                     z=0
+		    f=0
+		    i=0
     else:
         if s != "Parado":
             print(s)
