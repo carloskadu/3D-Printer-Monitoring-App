@@ -16,7 +16,7 @@ s = "Iniciou a impressão!"
 i=0
 f=0
 z=0
-Thaisa = "Não acabou"
+Thaisa = "Não acabou" #Oi
 while(1):
 	# Return Value and the current frame
     ret, frame = capture.read()
