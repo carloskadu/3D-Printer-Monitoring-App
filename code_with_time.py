@@ -16,7 +16,7 @@ s = "Iniciou a impressão!"
 i=0
 f=0
 z=0
-Thaisa = "Não acabou" #Oi
+Thaisa = "Não acabou" 
 while(1):
 	# Return Value and the current frame
     ret, frame = capture.read()
@@ -46,20 +46,19 @@ while(1):
             if t!=i and Thaisa == "Não acabou":
                 print(i)
                 z+=1
-                if z==1:
-                    f=i
-            if i-f==20 or i-f==-39:
-                print("Acabou a impressão")
-                Thaisa = "Fim"   
-                s="Movimento"
-                z=0
-                f=0
-                i=0       
+
+                if i-f==20 or i-f==-19:
+                    print("Acabou a impressão")
+                    Thaisa = "Fim"   
+                    s="Movimento"
+                    f=0
+                    i=0       
     else:
+        z=0
         if s != "Parado":
             print(s)
             s = "Parado"
-    if Thaisa == "Fim":
+
 
     cv2.imshow('Frame', resizedFrame)
     cv2.imshow('Mask', fgmask)
