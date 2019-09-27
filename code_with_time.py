@@ -60,13 +60,10 @@ while(1):
             print(s)
             s = "Parado"
     if Thaisa == "Fim":
-        
 
-            
     cv2.imshow('Frame', resizedFrame)
     cv2.imshow('Mask', fgmask)
-
-
+    
     k = cv2.waitKey(1) & 0xff
     if k == 27:
         break
