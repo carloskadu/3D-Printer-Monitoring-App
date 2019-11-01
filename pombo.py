@@ -12,7 +12,6 @@ class Pigeon():
                 break
 
             except json.decoder.JSONDecodeError:
-                pass
                 continue
             
         return data["inf"]
