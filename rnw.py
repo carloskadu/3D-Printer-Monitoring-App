@@ -1,4 +1,4 @@
-from hello import Pigeon as p
+from pombo import Pigeon as p
 
 def main():
 
