@@ -1,5 +1,5 @@
 import json
-import requests
+import requests as r
 
 class Pigeon():
     def sedex():
