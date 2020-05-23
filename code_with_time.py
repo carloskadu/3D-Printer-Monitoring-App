@@ -12,14 +12,14 @@ fgbg = cv2.createBackgroundSubtractorMOG2(300, 400, True)
 
 # Keeps track of what frame we're on
 frameCount = 0
-s = "Iniciou a impressão!"
+s = "The impression has started!"
 i=0
 f=0
 z=0
 <<<<<<< HEAD
-Thaisa = "Não acabou" 
+T = "Not over" #Variable T indicates the stage of the impression
 =======
-Thaisa = "Não acabou"
+T = "Not over"
 >>>>>>> master
 while(1):
 	# Return Value and the current frame
@@ -41,27 +41,27 @@ while(1):
 
 
 	# Determine how many pixels do you want to detect to be considered "movement"
-	# if (frameCount > 1 and count > 5000):
-    if count <= 500 and Thaisa == "Não acabou":
-        if s != "Movimento":
+	# if (frameCount > 1 and count > 500):
+    if count <= 500 and T == "Not over": #The T variable looks for a time of no movement to detect if the impression is over
+        if s != "Moving":
             t=i
             t1=datetime.datetime.now()
             i=int(t1.second)
-            if t!=i and Thaisa == "Não acabou":
+            if t!=i and T == "Not over":
                 print(i)
                 z+=1
 
                 if i-f==20 or i-f==-19:
-                    print("Acabou a impressão")
-                    Thaisa = "Fim"   
-                    s="Movimento"
+                    print("Done!")
+                    T = "End"   
+                    s="Moving"
                     f=0
                     i=0       
     else:
         z=0
-        if s != "Parado":
+        if s != "Stopped":
             print(s)
-            s = "Parado"
+            s = "Stopped"
 
 
     cv2.imshow('Frame', resizedFrame)
