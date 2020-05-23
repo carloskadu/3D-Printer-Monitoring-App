@@ -33,16 +33,16 @@ while(1):
 
 
 	# Determine how many pixels do you want to detect to be considered "movement"
-	# if (frameCount > 1 and count > 5000):
+	# if (frameCount > 1 and count > 500):
     if count > 500:
-        if s != "Parado":
+        if s != "Stopped": #Lock as Stopped, so the terminal won't get flooded
             print(s)
-            s = "Parado"
+            s = "Stopped"
     else:
-        if s != "Movimento":
+        if s != "Moving": #Lock as Moving, same logic as above
             print(s)
-            s = "Movimento"
-    cv2.imshow('Frame', resizedFrame)
+            s = "Moving"
+    cv2.imshow('Frame', resizedFrame) #Show us the image
     cv2.imshow('Mask', fgmask)
 
 
