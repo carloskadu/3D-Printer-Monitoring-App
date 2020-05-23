@@ -11,7 +11,7 @@ fgbg = cv2.createBackgroundSubtractorMOG2(300, 400, True)
 
 # Keeps track of what frame we're on
 frameCount = 0
-s = "Parado"
+s = "Stopped"
 
 while(1):
 	# Return Value and the current frame
