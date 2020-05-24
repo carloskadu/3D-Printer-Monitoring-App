@@ -3,7 +3,6 @@ import datetime
 import cv2
 
 # Video Capture 
-# capture = cv2.VideoCapture(0)
 capture = cv2.VideoCapture(0)
 
 # History, Threshold, DetectShadows 
@@ -13,14 +12,13 @@ fgbg = cv2.createBackgroundSubtractorMOG2(300, 400, True)
 # Keeps track of what frame we're on
 frameCount = 0
 s = "The impression has started!"
-i=0
-f=0
-z=0
-<<<<<<< HEAD
+
+#time variables
+i=0 #indicates the time the time counting started
+z=0 #indicates the delta time 
+
 T = "Not over" #Variable T indicates the stage of the impression
-=======
-T = "Not over"
->>>>>>> master
+
 while(1):
 	# Return Value and the current frame
     ret, frame = capture.read()
@@ -45,18 +43,16 @@ while(1):
     if count <= 500 and T == "Not over": #The T variable looks for a time of no movement to detect if the impression is over
         if s != "Moving":
             t=i
-            t1=datetime.datetime.now()
-            i=int(t1.second)
+            t1=datetime.datetime.now() #get the current time 
+            i=int(t1.second) #extract oly seconds from the current time
             if t!=i and T == "Not over":
-                print(i)
                 z+=1
-
-                if i-f==20 or i-f==-19:
+                if z==10 and T =="Not over":
                     print("Done!")
-                    T = "End"   
-                    s="Moving"
-                    f=0
-                    i=0       
+                    T = "End"
+                    i=0 
+                    z=0
+                         
     else:
         z=0
         if s != "Stopped":
