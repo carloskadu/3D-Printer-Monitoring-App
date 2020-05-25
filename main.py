@@ -30,8 +30,6 @@ def changeDataInServer(key, new_value):
         arquivo.close()
 
 changeDataInServer('codigo', 'ligado')
-Carlos=datetime.datetime.now()
-print(Carlos)
 # Video Capture 
 # capture = cv2.VideoCapture(0)
 capture = cv2.VideoCapture(0)
@@ -42,11 +40,14 @@ fgbg = cv2.createBackgroundSubtractorMOG2(300, 400, True)
 
 # Keeps track of what frame we're on
 frameCount = 0
-s = "Iniciou a impressão!"
-i=0
-f=0
-z=0
-Thaisa = "Não acabou"
+
+s = "The impression has started!"
+
+#time variables
+i=0 #indicates the time the time counting started
+z=0 #indicates the delta time 
+
+T = "Not over" #Variable T indicates the stage of the impression
 
 while(1):
 	# Return Value and the current frame
@@ -69,32 +70,29 @@ while(1):
 
 	# Determine how many pixels do you want to detect to be considered "movement"
 	# if (frameCount > 1 and count > 5000):
-    if count <= 500 :
-        if s != "Movimento":
+     if count <= 500 and T == "Not over": #The T variable looks for a time of no movement to detect if the impression is over
+        if s != "Moving":
             t=i
-            t1=datetime.datetime.now()
-            i=int(t1.second)
-            if t!=i and Thaisa != "Acabou" :
+            t1=datetime.datetime.now() #get the current time 
+            i=int(t1.second) #extract oly seconds from the current time
+            if t!=i and T == "Not over":
                 z+=1
-                if z==20 and Thaisa == "Não acabou":
-                    Nono=datetime.datetime.now()
-                    Mafe=Nono-Carlos
-                    print('A impressão durou:{}'.format(Mafe))
-                    print("Acabou a impressão")
+                 if z==10 and T =="Not over":
+                    print("Done!!!")
                     changeDataInServer('estado', 'desligado')
                     f=0
                     i=0 
                     z=0
-                    Thaisa = "Acabou"
+                    T = "End"
             
     else:
         z=0
-        Thaisa = "Não acabou"
+        T = "Not over"
         if s != "Parado":
             changeDataInServer('estado', 'ligado')
             print(s)
-            s = "Parado"
-            Thaisa = "Não acabou"
+            s = "Stoped"
+            T = "Not over"
 
     cv2.imshow('Frame', resizedFrame)
     cv2.imshow('Mask', fgmask)
