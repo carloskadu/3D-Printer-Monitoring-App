@@ -51,15 +51,15 @@ You will need an Android Ambient, it can be an Android Phone of any brand.
 # **Authors**
 [Carlos Eduardo Lima Gonçalves](https://github.com/carloskadu)
 
-[João Pedro Gôuveia](perfil github)
+[João Pedro Gôuveia](https://github.com/jaaoop)
 
-[Maria Fernanda Kadota](perfil github)
+[Maria Fernanda Kadota](https://github.com/MafeKadota)
 
 [Nodyer Henrique Nakanishi dos Anjos](https://github.com/Nodyer)
 
 [Pedro Caldato](https://github.com/pecaldato/)
 
-[Thaísa Corbalan Lima](perfil github)
+[Thaísa Corbalan Lima](https://www.facebook.com/thaisa.lima.50596)
 
 # **Thanks**
 ## Many thanks to **IEEE Robotics and Automation Society - Unesp Bauru** for providing the experience of developing a project like this.
