@@ -9,7 +9,7 @@ def changeDataInServer(key, new_value):
         # URL the Server
         url = input('Insert the server link: ')
 
-        # Buscando o URL do WebAPI
+        # Searching the URL WebAPI
         req = requests.get(url)
 
         # Try to access
@@ -24,13 +24,13 @@ def changeDataInServer(key, new_value):
     # Replacing for a new key value
     json_data[key] = new_value
 
-    with open('comunication.json','w') as arquivo: # Converting string for json
+    with open('comunication.json','w') as arquivo: # Converting string to json
         json_acceptable = str(json_data).replace("'","\"")
         arquivo.write(json_acceptable)
         arquivo.close()
 
 def main():
-    changeDataInServer('codigo', 'ligado')
+    changeDataInServer('code', 'on')
     Carlos=datetime.datetime.now()
     print(Carlos)
     # Video Capture 
@@ -43,11 +43,11 @@ def main():
 
     # Keeps track of what frame we're on
     frameCount = 0
-    s = "Iniciou a impressão!"
+    s = "The impression has started!"
     i=0
     f=0
     z=0
-    Thaisa = "Não acabou"
+    Thaisa = "Not over"
 
     while(1):
         # Return Value and the current frame
@@ -71,31 +71,31 @@ def main():
         # Determine how many pixels do you want to detect to be considered "movement"
         # if (frameCount > 1 and count > 5000):
         if count <= 500 :
-            if s != "Movimento":
+            if s != "Moving":
                 t=i
                 t1=datetime.datetime.now()
                 i=int(t1.second)
-                if t!=i and Thaisa != "Acabou" :
+                if t!=i and Thaisa != "End" :
                     z+=1
-                    if z==20 and Thaisa == "Não acabou":
+                    if z==20 and Thaisa == "Not over":
                         Nono=datetime.datetime.now()
                         Mafe=Nono-Carlos
-                        print('A impressão durou:{}'.format(Mafe))
-                        print("Acabou a impressão")
-                        changeDataInServer('estado', 'desligado')
+                        print("Printing is done!")
+                        print('Time:{}'.format(Mafe))
+                        changeDataInServer('switch', 'off')
                         f=0
                         i=0 
                         z=0
-                        Thaisa = "Acabou"
+                        Thaisa = "End"
                 
         else:
             z=0
-            Thaisa = "Não acabou"
-            if s != "Parado":
-                changeDataInServer('estado', 'ligado')
+            Thaisa = "Not over"
+            if s != "Stopped":
+                changeDataInServer('switch', 'on')
                 print(s)
-                s = "Parado"
-                Thaisa = "Não acabou"
+                s = "Stopped"
+                Thaisa = "Not over"
 
         cv2.imshow('Frame', resizedFrame)
         cv2.imshow('Mask', fgmask)
@@ -104,7 +104,7 @@ def main():
         if k == 27:
             break
     capture.release()
-    changeDataInServer('estado', 'ligado')
+    changeDataInServer('switch', 'on')
     cv2.destroyAllWindows()
 
 main()
