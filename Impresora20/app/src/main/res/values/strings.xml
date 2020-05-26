@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Impresora 2.0</string>
+    <string name="start">Start</string>
+    <string name="stream">Stream</string>
+    <string name="stop">Stop</string>
+    <string name="link_para_o_stream">jaooo</string>
+    <string name="x"></string>
+    <string name="mensagem_da_notificação">Corre pra ver a impressão</string>
+
+</resources>
