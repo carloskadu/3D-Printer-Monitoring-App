@@ -31,23 +31,19 @@ def changeDataInServer(key, new_value):
 
 def main():
     changeDataInServer('code', 'on')
-    Carlos=datetime.datetime.now()
-    print(Carlos)
+    C = datetime.datetime.now() # Your local time
+    print(C)
     # Video Capture 
-    # capture = cv2.VideoCapture(0)
     capture = cv2.VideoCapture(0)
 
     # History, Threshold, DetectShadows 
-    # fgbg = cv2.createBackgroundSubtractorMOG2(50, 200, True)
     fgbg = cv2.createBackgroundSubtractorMOG2(300, 400, True)
 
-    # Keeps track of what frame we're on
-    frameCount = 0
-    s = "The impression has started!"
+    s = "The impression has started!" # Says if it is moving or not
     i=0
     f=0
     z=0
-    Thaisa = "Not over"
+    T = "Not over" # Say the progress of the impression
 
     while(1):
         # Return Value and the current frame
@@ -57,7 +53,6 @@ def main():
         if not ret:
             break
 
-        # frameCount += 1
         # Resize the frame
         resizedFrame = cv2.resize(frame, (0, 0), fx=0.50, fy=0.50)
 
@@ -69,33 +64,32 @@ def main():
 
 
         # Determine how many pixels do you want to detect to be considered "movement"
-        # if (frameCount > 1 and count > 5000):
-        if count <= 500 :
+        if count <= 500 : # Condition to see if the movement has stopped and start the countdown
             if s != "Moving":
                 t=i
                 t1=datetime.datetime.now()
                 i=int(t1.second)
-                if t!=i and Thaisa != "End" :
+                if t!=i and T != "End" :
                     z+=1
-                    if z==20 and Thaisa == "Not over":
-                        Nono=datetime.datetime.now()
-                        Mafe=Nono-Carlos
+                    if z==20 and T == "Not over":
+                        N = datetime.datetime.now()
+                        M = N - C
                         print("Printing is done!")
-                        print('Time:{}'.format(Mafe))
+                        print('Time:{}'.format(M))
                         changeDataInServer('switch', 'off')
                         f=0
                         i=0 
                         z=0
-                        Thaisa = "End"
+                        T = "End"
                 
         else:
             z=0
-            Thaisa = "Not over"
+            T = "Not over"
             if s != "Stopped":
                 changeDataInServer('switch', 'on')
                 print(s)
                 s = "Stopped"
-                Thaisa = "Not over"
+                T = "Not over"
 
         cv2.imshow('Frame', resizedFrame)
         cv2.imshow('Mask', fgmask)
