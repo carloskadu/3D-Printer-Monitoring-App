@@ -92,7 +92,7 @@ def main():
             end = "Not over"
             if situation != "Stoped":
                 changeDataInServer('Print', 'On')
-                print(s)
+                print(situation)
                 situation = "Stoped"
                 end = "Not over"
 
