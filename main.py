@@ -6,99 +6,103 @@ import requests
 
 def changeDataInServer(key, new_value):
     while True:    
-        # URL the Server
-        url = input('Insert the server link: ')
+        #URL
+        url = "http://192.168.0.101:8080/%C3%81rea%20de%20Trabalho/priorities.json"
 
-        # Searching the URL WebAPI
+        #Buscando o URL do WebAPI
         req = requests.get(url)
 
-        # Try to access
+        #Tentativa de acesso
         try:
-            # Reading WebAPI
+            #Leitura da WebAPI
             json_data = req.json()
             break
 
         except json.decoder.JSONDecodeError:
             continue
 
-    # Replacing for a new key value
+    #Substituindo para um novo valor da chave
     json_data[key] = new_value
 
-    with open('comunication.json','w') as arquivo: # Converting string to json
+    with open('priorities.json','w') as arquivo:
         json_acceptable = str(json_data).replace("'","\"")
         arquivo.write(json_acceptable)
         arquivo.close()
 
-def main():
-    changeDataInServer('code', 'on')
-    time = datetime.datetime.now() # Your local time
-    print(time)
-    # Video Capture 
-    capture = cv2.VideoCapture(0)
+changeDataInServer('codigo', 'ligado')
+# Video Capture 
+# capture = cv2.VideoCapture(0)
+capture = cv2.VideoCapture(0)
 
-    # History, Threshold, DetectShadows 
-    fgbg = cv2.createBackgroundSubtractorMOG2(300, 400, True)
+# History, Threshold, DetectShadows 
+# fgbg = cv2.createBackgroundSubtractorMOG2(50, 200, True)
+fgbg = cv2.createBackgroundSubtractorMOG2(300, 400, True)
 
-    status = "The impression has started!" # Says if it is moving or not
-    i=0
-    f=0
-    z=0
-    end = "Not over" # Say the progress of the impression
+# Keeps track of what frame we're on
+frameCount = 0
 
-    while(1):
-        # Return Value and the current frame
-        ret, frame = capture.read()
+#status variables 
+situantion = "The impression has started!" # shows the current impression status
 
-        #  Check if a current frame actually exist
-        if not ret:
-            break
+#time variables
+initTime=0 #indicates the time the time counting started
+deltaTime=0 #indicates the delta 
 
-        # Resize the frame
-        resizedFrame = cv2.resize(frame, (0, 0), fx=0.50, fy=0.50)
+T = "Not over" #Variable T indicates the stage of the impression
 
-        # Get the foreground mask
-        fgmask = fgbg.apply(resizedFrame)
+while(1):
+	# Return Value and the current frame
+    ret, frame = capture.read()
 
-        # Count all the non zero pixels within the mask
-        count = np.count_nonzero(fgmask)
+	#  Check if a current frame actually exist
+    if not ret:
+        break
+
+    # frameCount += 1
+	# Resize the frame
+    resizedFrame = cv2.resize(frame, (0, 0), fx=0.50, fy=0.50)
+
+	# Get the foreground mask
+    fgmask = fgbg.apply(resizedFrame)
+
+	# Count all the non zero pixels within the mask
+    count = np.count_nonzero(fgmask)
 
 
-        # Determine how many pixels do you want to detect to be considered "movement"
-        if count <= 500 : # Condition to see if the movement has stopped and start the countdown
-            if status != "Moving":
-                t=i
-                t1=datetime.datetime.now()
-                i=int(t1.second)
-                if t!=i and end != "End" :
-                    z+=1
-                    if z==20 and end == "Not over":
-                        finalTime = datetime.datetime.now()
-                        deltaTime = finalTime - time
-                        print("Printing is done!")
-                        print('Time:{}'.format(deltaTime))
-                        changeDataInServer('switch', 'off')
-                        f=0
-                        i=0 
-                        z=0
-                        end = "End"
-                
-        else:
-            z=0
-            end = "Not over"
-            if status != "Stopped":
-                changeDataInServer('switch', 'on')
-                print(status)
-                status = "Stopped"
-                end = "Not over"
+	# Determine how many pixels do you want to detect to be considered "movement"
+	# if (frameCount > 1 and count > 5000):
+     if count <= 500 and T == "Not over": #The T variable looks for a time of no movement to detect if the impression is over
+        if s != "Moving":
+            t=initTime
+            currentTime=datetime.datetime.now() #get the current time 
+            initTime=int(currentTime.second) #extract oly seconds from the current time
+            if t!=initTime and T == "Not over":
+                deltaTime+=1
+                 if deltaTime==10 and T =="Not over":
+                    
+                    print("Done!!!")
+                    
+                    changeDataInServer('estado', 'desligado')
 
-        cv2.imshow('Frame', resizedFrame)
-        cv2.imshow('Mask', fgmask)
-        
-        k = cv2.waitKey(1) & 0xff
-        if k == 27:
-            break
-    capture.release()
-    changeDataInServer('switch', 'on')
-    cv2.destroyAllWindows()
+                    initTime=0 
+                    deltaTime=0
+                    T = "End"
+            
+    else:
+        deltaTime=0
+        T = "Not over"
+        if s != "Stoped":
+            changeDataInServer('estado', 'ligado')
+            print(s)
+            s = "Stoped"
+            T = "Not over"
 
-main()
+    cv2.imshow('Frame', resizedFrame)
+    cv2.imshow('Mask', fgmask)
+    
+    k = cv2.waitKey(1) & 0xff
+    if k == 27:
+        break
+capture.release()
+changeDataInServer('estado', 'ligado')
+cv2.destroyAllWindows()
