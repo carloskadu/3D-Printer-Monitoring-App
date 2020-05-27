@@ -81,7 +81,7 @@ def main():
                         
                         print("Done!!!")
                         
-                        changeDataInServer('Status', 'Off')
+                        changeDataInServer('Print', 'Off')
 
                         initTime=0 
                         deltaTime=0
@@ -91,7 +91,7 @@ def main():
             deltaTime=0
             end = "Not over"
             if situation != "Stoped":
-                changeDataInServer('Status', 'On')
+                changeDataInServer('Print', 'On')
                 print(s)
                 situation = "Stoped"
                 end = "Not over"
@@ -103,7 +103,7 @@ def main():
         if k == 27:
             break
     capture.release()
-    changeDataInServer('Status', 'On')
+    changeDataInServer('Print', 'On')
     cv2.destroyAllWindows()
 
 main()
