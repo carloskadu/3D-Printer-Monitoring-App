@@ -72,7 +72,7 @@ while(1):
 	# Determine how many pixels do you want to detect to be considered "movement"
 	# if (frameCount > 1 and count > 5000):
      if count <= 500 and T == "Not over": #The T variable looks for a time of no movement to detect if the impression is over
-        if s != "Moving":
+        if situantion != "Moving":
             t=initTime
             currentTime=datetime.datetime.now() #get the current time 
             initTime=int(currentTime.second) #extract oly seconds from the current time
@@ -91,10 +91,10 @@ while(1):
     else:
         deltaTime=0
         T = "Not over"
-        if s != "Stoped":
+        if situantion != "Stoped":
             changeDataInServer('estado', 'ligado')
             print(s)
-            s = "Stoped"
+            situantion = "Stoped"
             T = "Not over"
 
     cv2.imshow('Frame', resizedFrame)
