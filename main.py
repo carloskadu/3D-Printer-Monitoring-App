@@ -42,14 +42,14 @@ def main():
     # Keeps track of what frame we're on
     frameCount = 0
 
-    #status variables 
+    # Status variables 
     situation = "The impression has started!" # shows the current impression status
 
-    #time variables
-    initTime=0 #indicates the time the time counting started
-    deltaTime=0 #indicates the delta 
+    # Time variables
+    initTime=0 # Indicates the time the time counting started
+    deltaTime=0 # Indicates the delta 
 
-    end = "Not over" #Variable T indicates the stage of the impression
+    end = "Not over" # Variable T indicates the stage of the impression
 
     while(1):
         # Return Value and the current frame
@@ -70,11 +70,11 @@ def main():
 
 
         # Determine how many pixels do you want to detect to be considered "movement"
-        if count <= 500 and end == "Not over": #The end variable looks for a time of no movement to detect if the impression is over
+        if count <= 500 and end == "Not over": # The end variable looks for a time of no movement to detect if the impression is over
             if situation != "Moving":
                 t=initTime
-                currentTime=datetime.datetime.now() #get the current time 
-                initTime=int(currentTime.second) #extract oly seconds from the current time
+                currentTime=datetime.datetime.now() # Get the current time 
+                initTime=int(currentTime.second) # Extract oly seconds from the current time
                 if t!=initTime and end == "Not over":
                     deltaTime+=1
                     if deltaTime==10 and end =="Not over":
@@ -90,10 +90,10 @@ def main():
         else:
             deltaTime=0
             end = "Not over"
-            if situation != "Stoped":
+            if situation != "Stopped":
                 changeDataInServer('Print', 'On')
                 print(situation)
-                situation = "Stoped"
+                situation = "Stopped"
                 end = "Not over"
 
         cv2.imshow('Frame', resizedFrame)
