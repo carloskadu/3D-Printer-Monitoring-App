@@ -31,24 +31,22 @@ def changeDataInServer(key, new_value):
 
 changeDataInServer('codigo', 'ligado')
 # Video Capture 
-# capture = cv2.VideoCapture(0)
 capture = cv2.VideoCapture(0)
 
 # History, Threshold, DetectShadows 
-# fgbg = cv2.createBackgroundSubtractorMOG2(50, 200, True)
 fgbg = cv2.createBackgroundSubtractorMOG2(300, 400, True)
 
 # Keeps track of what frame we're on
 frameCount = 0
 
 #status variables 
-situantion = "The impression has started!" # shows the current impression status
+situation = "The impression has started!" # shows the current impression status
 
 #time variables
 initTime=0 #indicates the time the time counting started
 deltaTime=0 #indicates the delta 
 
-T = "Not over" #Variable T indicates the stage of the impression
+end = "Not over" #Variable T indicates the stage of the impression
 
 while(1):
 	# Return Value and the current frame
@@ -58,7 +56,6 @@ while(1):
     if not ret:
         break
 
-    # frameCount += 1
 	# Resize the frame
     resizedFrame = cv2.resize(frame, (0, 0), fx=0.50, fy=0.50)
 
@@ -70,15 +67,14 @@ while(1):
 
 
 	# Determine how many pixels do you want to detect to be considered "movement"
-	# if (frameCount > 1 and count > 5000):
-     if count <= 500 and T == "Not over": #The T variable looks for a time of no movement to detect if the impression is over
-        if situantion != "Moving":
+     if count <= 500 and end == "Not over": #The end variable looks for a time of no movement to detect if the impression is over
+        if situation != "Moving":
             t=initTime
             currentTime=datetime.datetime.now() #get the current time 
             initTime=int(currentTime.second) #extract oly seconds from the current time
-            if t!=initTime and T == "Not over":
+            if t!=initTime and end == "Not over":
                 deltaTime+=1
-                 if deltaTime==10 and T =="Not over":
+                 if deltaTime==10 and end =="Not over":
                     
                     print("Done!!!")
                     
@@ -86,16 +82,16 @@ while(1):
 
                     initTime=0 
                     deltaTime=0
-                    T = "End"
+                    end = "End"
             
     else:
         deltaTime=0
-        T = "Not over"
-        if situantion != "Stoped":
+        end = "Not over"
+        if situation != "Stoped":
             changeDataInServer('estado', 'ligado')
             print(s)
-            situantion = "Stoped"
-            T = "Not over"
+            situation = "Stoped"
+            end = "Not over"
 
     cv2.imshow('Frame', resizedFrame)
     cv2.imshow('Mask', fgmask)
