@@ -1,5 +1,5 @@
 # **3D Printer Monitoring App**
-If you want to read it in portuguese (Brazil): (link)
+If you want to read it in [portuguese (Brazil)](https://github.com/carloskadu/3D-Printer-Monitoring-App/blob/readme/README%20-%20PTBR)
 Our project have as an objective create an App capable of monitoring a 3D printer movement and advise the end of the impression. It comes in two modules, the main code with a server and the App. The communication is one-way only, just making sure the code send the printer current state. The main code only use one non native library that is OpenCV and the server is easily achieved with a native module of Python.
 
 
