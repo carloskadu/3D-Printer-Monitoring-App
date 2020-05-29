@@ -8,7 +8,7 @@ import os
 def changeDataInServer(key, new_value):
     while True:    
         # URL the Server
-        url = input('Insert the server link: ') + os.getcwd() + '/comunication.json'
+        url ="http://"+socket.gethostbyname(socket.gethostname())+":8080"+"Path to your json code in server"
 
         # Searching the URL of WebAPI
         req = requests.get(url)
